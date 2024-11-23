@@ -1,3 +1,15 @@
 ### Java Threads
 Thread(Platform Thread) = OS Thread
 Virtual Thread
+### Virtual Thread
+It will look like a thread
+but OS cannot see them/ schedule them
+### Stack Size
+Platform threads have fixed stack
+Virtual Threads do NOT have fixed stack. They have resizable stack
+class VirtualThread{
+    Runnable task;
+    VirtualStack stack;
+}
+
+
