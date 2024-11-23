@@ -16,10 +16,32 @@ Platform Threads are scheduled by the OS scheduler
 Virtual Threads are scheduled by JVM (ForkJoinPool)
 - core pool size = available processor
 - Carrier threads will NOT be blocked during I/O
+
 ### Scheduling types
 Preemptive: OS scheduling policy, CPU is allocated for a limited time, context switching
 Cooperative: CPU is allocated till the execution is completed. If there is a long running thread/task, other thread might have to starve
 How to implement Cooperative? Thread.yield
+
+### Synchronous blocking style code
+Runnable task = () -> {
+  Price price = productService.getPrice(productId);
+  PaymentConfirmation payment = paymentService.deductPayment(userId, price);
+  ShippingConfirmation shipping = shippingService.scheduleShipping(userId, productId, quantity);
+};
+
+// Let the virtual thread execute the task
+// During blocking I/O call, it will be unmounted and next task will be executed
+Thread.ofVirtual().start(task);
+
+### Synchronization
+Mechanism to provide controlled access to shared resources/critical section of code in a multi-threaded env
+synchronized + VT => Pinned
+I/O task -> Virtual thread cannot be unmounted. Would affect scaling.
+
+### ReentrantLock
+Synchronized + flexibility
+A thread which has been waiting longer will get the chance to acquire the lock
+tryLock with timeout: max time for a thread to wait to acquire the lock
 
 
 

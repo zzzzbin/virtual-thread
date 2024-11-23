@@ -1,12 +1,10 @@
 package com.si.sec05;
 
-/*
-    Virtual Threads are indented for I/O tasks. This is a simple demo to show that race conditions are still applicable.
- */
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,11 +12,12 @@ import org.slf4j.LoggerFactory;
 import com.si.util.CommonUtils;
 
 /*
-    Virtual Threads are indented for I/O tasks. This is a simple demo to show that race conditions are still applicable. How we normally fix it.
+    Virtual Threads are indented for I/O tasks. This is a simple demo the use of ReentrantLock
  */
-public class Lec02Synchronization {
+public class Lec04ReentrantLock {
 
-    private static final Logger log = LoggerFactory.getLogger(Lec02Synchronization.class);
+    private static final Logger log = LoggerFactory.getLogger(Lec04ReentrantLock.class);
+    private static final Lock lock = new ReentrantLock();
     private static final List<Integer> list = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -42,8 +41,15 @@ public class Lec02Synchronization {
         }
     }
 
-    private static synchronized void inMemoryTask(){
-        list.add(1);
+    private static void inMemoryTask(){
+        try{
+            lock.lock();
+            list.add(1);
+        }catch (Exception e){
+            log.error("error", e);
+        }finally {
+            lock.unlock();
+        }
     }
 
 }
