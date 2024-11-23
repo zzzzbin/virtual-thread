@@ -11,5 +11,16 @@ class VirtualThread{
     Runnable task;
     VirtualStack stack;
 }
+### Virtual Thread Scheduler
+Platform Threads are scheduled by the OS scheduler
+Virtual Threads are scheduled by JVM (ForkJoinPool)
+- core pool size = available processor
+- Carrier threads will NOT be blocked during I/O
+### Scheduling types
+Preemptive: OS scheduling policy, CPU is allocated for a limited time, context switching
+Cooperative: CPU is allocated till the execution is completed. If there is a long running thread/task, other thread might have to starve
+How to implement Cooperative? Thread.yield
+
+
 
 
