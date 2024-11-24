@@ -43,6 +43,27 @@ Synchronized + flexibility
 A thread which has been waiting longer will get the chance to acquire the lock
 tryLock with timeout: max time for a thread to wait to acquire the lock
 
+### Summary
+Platform threads: 1 platform thread = 1 os thread, expensive to create, limited number of platform threads
+Virtual threads: it extends Thread class allowing us to use thread-related methods as usual, like weight and occupy
+minimal space in the heap. We can create milions of them. Very cheap to create. It does not replace platform thread.
+VT is great for IO tasks. We get the "non-blocking benefits behind the scenes"
+VT can not be executed directly by OS scheduler
+It is mounted on Carrier thread for the execution
+
+### ExecutorService(fixed, single, cached, scheduled): -> QUEUE
+Executor is a Functional interface. ExecutorService is an interface which extends Executor
+Executors is an utility class with factory methods to create an instance of ExecutorService impl
+VT are NOT supposed to be pooled.
+Fixed Thread Pool: A thread pool with a dedicated number of threads. Usage: A web application with 200 threads.
+Single Thread Executor: Same as above. A thread pool with a single worker thread. Not configurable. Usage: To execute tasks sequentially.
+Cached Thread Pool: Elastic Thread Pool. Create a new Thread on demand. Reuse existing threads if available. Idle thread lifetime is 1 min. Usage: Unpredictable workload.
+Scheduled Thread Pool: Thread pool that can be used to run tasks at regular intervals. Usage: Call a remote service every minute.
+
+
+
+
+
 
 
 
