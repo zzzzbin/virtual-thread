@@ -60,6 +60,12 @@ Single Thread Executor: Same as above. A thread pool with a single worker thread
 Cached Thread Pool: Elastic Thread Pool. Create a new Thread on demand. Reuse existing threads if available. Idle thread lifetime is 1 min. Usage: Unpredictable workload.
 Scheduled Thread Pool: Thread pool that can be used to run tasks at regular intervals. Usage: Call a remote service every minute.
 
+### Semaphore s = new Semaphore(1) vs Lock l = new ReentrantLock();
+Lock: the thread which acquired the lock is supposed to unclock!
+Semaphore: any thread can release the permit!
+
+
+
 
 
 
