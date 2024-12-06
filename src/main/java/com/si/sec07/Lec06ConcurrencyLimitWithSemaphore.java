@@ -7,13 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.si.sec07.concurrencylimit.ConcurrencyLimiter;
+import com.si.sec07.concurrencylimit.ConcurrencyLimiterOrder;
 import com.si.sec07.externalservice.Client;
 
 public class Lec06ConcurrencyLimitWithSemaphore {
     private static final Logger log = LoggerFactory.getLogger(Lec06ConcurrencyLimitWithSemaphore.class);
 
     public static void main(String[] args) throws Exception {
-        var limiter = new ConcurrencyLimiter(Executors.newVirtualThreadPerTaskExecutor(), 3);
+        var limiter = new ConcurrencyLimiterOrder(Executors.newVirtualThreadPerTaskExecutor(), 3);
         execute(limiter,20);
     }
 
@@ -25,7 +26,7 @@ public class Lec06ConcurrencyLimitWithSemaphore {
         return product;
     }
 
-    private static void execute(ConcurrencyLimiter concurrencyLimiter, int taskCount) throws Exception {
+    private static void execute(ConcurrencyLimiterOrder concurrencyLimiter, int taskCount) throws Exception {
         try(concurrencyLimiter){
             for (int i = 1; i < taskCount; i++) {
                 int finalI = i;
