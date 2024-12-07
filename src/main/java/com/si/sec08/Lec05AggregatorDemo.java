@@ -17,6 +17,6 @@ public class Lec05AggregatorDemo {
         // beans / singletons
         var executor = Executors.newThreadPerTaskExecutor(Thread.ofVirtual().name("vins").factory());
         var aggregator = new AggregatorService(executor);
-        log.info("product = {}", aggregator.getProductDto(52));
+        log.info("product = {}", aggregator.getProductDto(50));
     }
 }
