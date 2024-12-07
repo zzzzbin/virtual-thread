@@ -14,14 +14,14 @@ public class AggregatorService {
         this.executorService = executorService;
     }
 
-    public ProductDto getProductDto(int id) throws ExecutionException, InterruptedException {
+    public ProductDto getProductDto(int id) {
         var product = CompletableFuture.supplyAsync(() -> Client.getProduct(id), executorService)
-                .orTimeout(250, TimeUnit.MILLISECONDS)
+                .orTimeout(1250, TimeUnit.MILLISECONDS)
                 .exceptionally(ex -> "Product not found");
         var rating = CompletableFuture.supplyAsync(() -> Client.getRating(id), executorService)
                 .exceptionally(ex -> -1)
-                .orTimeout(250, TimeUnit.MICROSECONDS)
+                .orTimeout(1250, TimeUnit.MICROSECONDS)
                 .exceptionally(ex -> -2);
-        return new ProductDto(id, product.get(), rating.get());
+        return new ProductDto(id, product.join(), rating.join());
     }
 }
