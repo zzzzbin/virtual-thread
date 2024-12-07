@@ -64,6 +64,16 @@ Scheduled Thread Pool: Thread pool that can be used to run tasks at regular inte
 Lock: the thread which acquired the lock is supposed to unclock!
 Semaphore: any thread can release the permit!
 
+### summary
+ExecutorService with Platform Threads
+    single / fixed / cached / scheduled / fork-join-pool
+    These implementations pool threads
+    Do NOT use Virtual Thread factory.
+ExecutorService with Virtual Threads
+    single / fixed → use semaphore + Queue
+    cached → more or less same as thread-per-task
+    scheduled → use platform thread to schedule and virtual thread to execute
+    fork-join-pool → N/A
 
 
 
